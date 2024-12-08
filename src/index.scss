@@ -1,0 +1,130 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("./fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+body {
+  height: 100vh;
+  margin: 0;
+}
+.main {
+  height: 100%;
+  background-size: cover;
+  position: relative;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: blur(5px);
+  z-index: -1;
+  overflow: hidden;
+
+  &.sound-summer {
+    background: url("./assets/summer-bg.jpg");
+  }
+  &.sound-winter {
+    background: url("./assets/winter-bg.jpg");
+  }
+  &.sound-rain {
+    background: url("./assets/rainy-bg.jpg");
+  }
+}
+
+.header {
+  color: #ff5733;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 0;
+  padding-top: 20px;
+}
+
+.weather-types {
+  display: grid;
+  grid-template-columns: repeat(3, 120px);
+  gap: 20px;
+  padding: 0;
+  justify-content: center;
+}
+
+.weather-type {
+  width: 100%;
+  height: 120px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-size: cover;
+  position: relative;
+  cursor: pointer;
+  &::before,
+  &:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+  }
+
+  &:after {
+    content: url("./assets/icons/pause.svg");
+    opacity: 0;
+  }
+
+  &._active {
+    &::before {
+      animation: pulse 3s linear infinite;
+    }
+  }
+  &._paused {
+    &::before {
+      opacity: 0;
+    }
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &--summer {
+    background-image: url("./assets/summer-bg.jpg");
+    &::before {
+      content: url("./assets/icons/sun.svg");
+    }
+  }
+  &--rainy {
+    background-image: url("./assets/rainy-bg.jpg");
+    &::before {
+      content: url("./assets/icons/cloud-rain.svg");
+    }
+  }
+  &--winter {
+    background-image: url("./assets/winter-bg.jpg");
+    &::before {
+      content: url("./assets/icons/cloud-snow.svg");
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    70% {
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+}
+
+.volume {
+  text-align: center;
+}
