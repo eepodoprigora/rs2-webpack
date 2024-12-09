@@ -1,6 +1,12 @@
 import "./index.scss";
 
 class WeatherSounds {
+  currentSound: null | string;
+  audio: HTMLAudioElement;
+  volumeControl: HTMLInputElement;
+  buttons: NodeListOf<HTMLElement>;
+  background: HTMLElement;
+
   constructor() {
     this.currentSound = null;
     this.audio = new Audio();
@@ -31,7 +37,7 @@ class WeatherSounds {
     });
 
     this.volumeControl.addEventListener("input", (e) => {
-      this.updateVolume(e.target.value);
+      this.updateVolume(+(e.target as HTMLInputElement).value);
     });
   }
 
@@ -43,7 +49,7 @@ class WeatherSounds {
     });
   }
 
-  updatebackgroundClass(newClass) {
+  updatebackgroundClass(newClass: string) {
     this.background.className = this.background.className
       .split(" ")
       .filter((className) => !className.startsWith("sound-"))
@@ -51,12 +57,12 @@ class WeatherSounds {
     this.background.classList.add(`sound-${newClass}`);
   }
 
-  playSound(type) {
+  playSound(type: string) {
     this.stopCurrentSound();
     this.currentSound = type;
     this.audio.src = this.getSoundUrl(type);
     this.audio.loop = true;
-    this.audio.volume = this.volumeControl.value;
+    this.audio.volume = +this.volumeControl.value;
     this.audio.play();
   }
 
@@ -74,11 +80,11 @@ class WeatherSounds {
     }
   }
 
-  updateVolume(volume) {
+  updateVolume(volume: number) {
     this.audio.volume = volume;
   }
 
-  getSoundUrl(type) {
+  getSoundUrl(type: string) {
     return `/assets/sounds/${type}.mp3`;
   }
 }
