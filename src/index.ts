@@ -85,7 +85,7 @@ class WeatherSounds {
   }
 
   getSoundUrl(type: string) {
-    return `/assets/sounds/${type}.mp3`;
+    return `./assets/sounds/${type}.mp3`;
   }
 }
 
